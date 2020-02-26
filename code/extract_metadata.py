@@ -24,12 +24,10 @@ def extractMetadata(input, search_term):
     name_re = re.compile(r'\ANAME:[^\n]+\nDESCRIPTION')
     date_re = re.compile(r'EARLIEST_DATE: [^\d]*(\d{4})')
     origin_regex = r'FOUND_IN: ([^\n;]+)'
-    # old_origin_regex = r'FOUND_IN: ([^;\(\n]+)'
     to_replace_re = re.compile(r'\([^ ]+\)')
     origin_re = re.compile(origin_regex)
     ballad_re = re.compile(r'===\n([^=]+)\n')
     ballads = ballad_re.findall(input)
-    print(ballads[:20])
     dateDict = {}
     originDict = {}
     for ballad in ballads:
@@ -59,7 +57,7 @@ def extractMetadata(input, search_term):
     return dateDict, originDict
 
 
-def test():
+def test_extract_metadata():
     file_name = argv[1]
     file = open(file_name)
     input = file.read()
@@ -78,4 +76,4 @@ def test():
 
 
 if __name__ == '__main__':
-    test()
+    test_extract_metadata()

@@ -8,12 +8,15 @@ pp = pprint.PrettyPrinter(indent=4)
 class ChildBallad(object):
     """docstring for ballad."""
 
-    def __init__(self, number, variation, text, refrain):
+    def __init__(self, number, variation, text, refrain,
+                 date = None, origin = None):
         super(ChildBallad, self).__init__()
         self.number = number
         self.variation = variation
         self.reg_text = text
         self.refrain = refrain
+        self.date = date
+        self.origin = origin
 
 
 def extractBallad(input, join_lines = True):
@@ -68,7 +71,6 @@ def writeOutput(ballads, output_name = 'extracted_ballads.xlsx'):
     '''
     Write a list of ballad objects to an excel file that we can edit later
     '''
-    headers =
     num_list =[]
     var_list = []
     text_list = []
@@ -78,12 +80,13 @@ def writeOutput(ballads, output_name = 'extracted_ballads.xlsx'):
         text_and_refrain = str(ballad.reg_text) + '\n' + str(ballad.refrain)
         num_list.append(num)
         var_list.append(var)
-        # text_list.append(text_and_refrain)
+        text_list.append(text_and_refrain)
     df = pd.DataFrame(
         {'num': num_list,
-         'var':var_list}
+         'var': var_list,
+         'text_refrain': text_list}
         )
-    df.to_excel(output_name, index=False)
+    return df
 
 def testExtraction(test):
     '''
@@ -97,7 +100,7 @@ def testExtraction(test):
         print(new.refrain)
         print('-'*50)
 
-def main():
+def test_cleanup():
     file_name = argv[1]
     file = open(file_name)
     ballad_file = file.read()
@@ -107,4 +110,4 @@ def main():
     writeOutput(extracted_ballads)
 
 if __name__ == '__main__':
-    main()
+    test_cleanup()
